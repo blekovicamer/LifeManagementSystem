@@ -7,6 +7,7 @@ import org.bson.Document;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.time.LocalDate;
+import auth.Theme;
 
 public class MoodTrackerFrame extends JFrame {
 
@@ -16,12 +17,21 @@ public class MoodTrackerFrame extends JFrame {
     private DefaultTableModel model;
     private MongoCollection<Document> moodsCollection;
 
+    // ---------- KONSTRUKTOR BEZ ARGUMENATA ----------
     public MoodTrackerFrame() {
+        this("default"); // default tema
+    }
+
+    // ---------- KONSTRUKTOR S TEMOM ----------
+    public MoodTrackerFrame(String theme) {
         setTitle("Mood Tracker");
         setSize(500, 400);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLayout(null);
         setLocationRelativeTo(null);
+
+        // Primjena teme
+        getContentPane().setBackground(Theme.getColor(theme));
 
         moodsCollection = MongoDBConnection.getDatabase().getCollection("moods");
 

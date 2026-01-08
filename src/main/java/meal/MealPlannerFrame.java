@@ -7,6 +7,7 @@ import org.bson.Document;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.time.LocalDate;
+import auth.Theme;
 
 public class MealPlannerFrame extends JFrame {
 
@@ -16,12 +17,21 @@ public class MealPlannerFrame extends JFrame {
     private DefaultTableModel model;
     private MongoCollection<Document> mealsCollection;
 
+    // ---------- KONSTRUKTOR BEZ ARGUMENATA ----------
     public MealPlannerFrame() {
+        this("default"); // default tema
+    }
+
+    // ---------- KONSTRUKTOR S TEMOM ----------
+    public MealPlannerFrame(String theme) {
         setTitle("Meal Planner");
         setSize(500, 400);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLayout(null);
         setLocationRelativeTo(null);
+
+        // Primjena teme
+        getContentPane().setBackground(Theme.getColor(theme));
 
         mealsCollection = MongoDBConnection.getDatabase().getCollection("meals");
 
@@ -57,7 +67,6 @@ public class MealPlannerFrame extends JFrame {
         add(analyticsBtn);
 
         // ---------- ACTIONS ----------
-
         addBtn.addActionListener(e -> {
             String mealName = mealField.getText().trim();
             String caloriesText = caloriesField.getText().trim();

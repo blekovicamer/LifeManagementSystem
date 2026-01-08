@@ -1,20 +1,12 @@
 package habit;
+
 import com.mongodb.client.MongoCollection;
 import org.bson.Document;
 import financeapp.MongoDBConnection;
 import java.time.LocalDate;
-import javax.swing.JFrame;
-import javax.swing.JTextField;
-import javax.swing.JTable;
-import javax.swing.JLabel;
-import javax.swing.JButton;
-import javax.swing.JScrollPane;
-import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.*;
-
-
-
+import javax.swing.table.DefaultTableModel;
+import auth.Theme;
 
 public class HabitTrackerFrame extends JFrame {
 
@@ -23,12 +15,21 @@ public class HabitTrackerFrame extends JFrame {
     private DefaultTableModel model;
     private MongoCollection<Document> habitsCollection;
 
+    // ---------- KONSTRUKTOR BEZ ARGUMENATA ----------
     public HabitTrackerFrame() {
+        this("default"); // default tema ako se ne proslijedi
+    }
+
+    // ---------- KONSTRUKTOR S TEMOM ----------
+    public HabitTrackerFrame(String theme) {
         setTitle("Habit Tracker");
         setSize(500, 400);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLayout(null);
         setLocationRelativeTo(null);
+
+        // Primjena teme
+        getContentPane().setBackground(Theme.getColor(theme));
 
         habitsCollection = MongoDBConnection.getDatabase().getCollection("habits");
 
@@ -59,7 +60,6 @@ public class HabitTrackerFrame extends JFrame {
         add(completeBtn);
 
         // ---------- ACTIONS ----------
-
         addBtn.addActionListener(e -> {
             String habit = habitField.getText().trim();
             if (habit.isEmpty()) {

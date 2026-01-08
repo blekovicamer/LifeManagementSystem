@@ -4,9 +4,9 @@ import financeapp.FinanceTrackerForm;
 import javax.swing.*;
 import habit.HabitTrackerFrame;
 import meal.MealPlannerFrame;
-import mood.MoodTrackerFrame; // import Mood Tracker
+import mood.MoodTrackerFrame;
 import study.StudyPlannerFrame;
-
+import auth.Theme; // import Theme klase
 
 public class MainMenuFrame extends JFrame {
 
@@ -22,6 +22,7 @@ public class MainMenuFrame extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(null);
 
+        // ---------- DUGMAD ----------
         JButton habitBtn = new JButton("Habit Tracker");
         JButton mealBtn = new JButton("Meal Planner");
         JButton moodBtn = new JButton("Mood Tracker");
@@ -33,24 +34,22 @@ public class MainMenuFrame extends JFrame {
         habitBtn.setBounds(60, 40, 180, 40);
         mealBtn.setBounds(60, 100, 180, 40);
         moodBtn.setBounds(60, 160, 180, 40);
-        studyBtn.setBounds(60, 280, 180, 40);
         financeBtn.setBounds(60, 220, 180, 40);
+        studyBtn.setBounds(60, 280, 180, 40);
         logoutBtn.setBounds(60, 340, 180, 40);
 
         add(habitBtn);
         add(mealBtn);
-        add(moodBtn);  // dodano dugme u GUI
+        add(moodBtn);
         add(financeBtn);
         add(studyBtn);
         add(logoutBtn);
 
         // ---------- ACTIONS ----------
-
-        habitBtn.addActionListener(e -> new HabitTrackerFrame().setVisible(true));
-        mealBtn.addActionListener(e -> new MealPlannerFrame().setVisible(true));
-        moodBtn.addActionListener(e -> new MoodTrackerFrame().setVisible(true));
-        studyBtn.addActionListener(e -> new StudyPlannerFrame().setVisible(true));
-
+        habitBtn.addActionListener(e -> new HabitTrackerFrame(theme).setVisible(true));
+        mealBtn.addActionListener(e -> new MealPlannerFrame(theme).setVisible(true));
+        moodBtn.addActionListener(e -> new MoodTrackerFrame(theme).setVisible(true));
+        studyBtn.addActionListener(e -> new StudyPlannerFrame(theme).setVisible(true));
 
         financeBtn.addActionListener(e -> {
             JFrame frame = new JFrame("Finance Tracker");
@@ -58,6 +57,7 @@ public class MainMenuFrame extends JFrame {
             frame.setSize(800, 500);
             frame.setLocationRelativeTo(null);
             frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            frame.getContentPane().setBackground(Theme.getColor(theme)); // primjena teme
             frame.setVisible(true);
         });
 
@@ -66,12 +66,11 @@ public class MainMenuFrame extends JFrame {
             new auth.LoginFrame().setVisible(true);
         });
 
+        // Primjena teme na MainMenuFrame
         applyTheme();
     }
 
     private void applyTheme() {
-        if (theme.equals("dark")) {
-            getContentPane().setBackground(java.awt.Color.DARK_GRAY);
-        }
+        getContentPane().setBackground(Theme.getColor(theme)); // koristi Theme klasu
     }
 }

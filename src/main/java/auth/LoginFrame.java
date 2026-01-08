@@ -47,22 +47,28 @@ public class LoginFrame extends JFrame {
     }
 
     private void login() {
-        MongoCollection<Document> users =
+        String username = usernameField.getText().trim();
+        String password = new String(passwordField.getPassword());
+
+        if(username.isEmpty() || password.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please enter both username and password");
+            return;
+        }
+
+        // Dohvat kolekcije korisnika
+        MongoCollection<Document> usersCollection =
                 MongoDBConnection.getDatabase().getCollection("users");
 
-        Document user = users.find(
-                Filters.and(
-                        Filters.eq("username", usernameField.getText()),
-                        Filters.eq("password", new String(passwordField.getPassword()))
-                )
-        ).first();
+        // Dohvat korisnika iz MongoDB po username-u
+        Document user = usersCollection.find(Filters.eq("username", username)).first();
 
-        if (user != null) {
+        if(user != null && password.equals(user.getString("password"))) {
+            // Uspješan login – dohvat teme korisnika
+            String userTheme = user.getString("theme");
+
+            // Otvaranje MainMenu sa temom
             dispose();
-            new MainMenuFrame(
-                    user.getString("username"),
-                    user.getString("theme")
-            ).setVisible(true);
+            new MainMenuFrame(username, userTheme).setVisible(true);
         } else {
             JOptionPane.showMessageDialog(this, "Invalid credentials");
         }

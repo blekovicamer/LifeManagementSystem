@@ -1,10 +1,12 @@
 package auth;
 
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.Filters;
 import financeapp.MongoDBConnection;
 import org.bson.Document;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class RegisterFrame extends JFrame {
 
@@ -47,14 +49,32 @@ public class RegisterFrame extends JFrame {
         MongoCollection<Document> users =
                 MongoDBConnection.getDatabase().getCollection("users");
 
-        Document user = new Document("username", usernameField.getText())
-                .append("password", new String(passwordField.getPassword()))
-                .append("theme", themeBox.getSelectedItem().toString());
+        String username = usernameField.getText().trim();
+        String password = new String(passwordField.getPassword());
+        String theme = themeBox.getSelectedItem().toString();
+
+        if(username.isEmpty() || password.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Username and Password cannot be empty!");
+            return;
+        }
+
+        // Provjera da li username već postoji
+        if(users.find(Filters.eq("username", username)).first() != null) {
+            JOptionPane.showMessageDialog(this, "Username already exists!");
+            return;
+        }
+
+        // Spremanje korisnika u MongoDB
+        Document user = new Document("username", username)
+                .append("password", password)
+                .append("theme", theme);
 
         users.insertOne(user);
 
         JOptionPane.showMessageDialog(this, "Registration successful!");
+
+        // Otvaranje Main Menu odmah sa odabranom temom
         dispose();
-        new LoginFrame().setVisible(true);
+        new mainmenu.MainMenuFrame(username, theme).setVisible(true);
     }
 }

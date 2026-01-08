@@ -7,6 +7,7 @@ import org.bson.Document;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.time.LocalDate;
+import auth.Theme;
 
 public class StudyPlannerFrame extends JFrame {
 
@@ -16,12 +17,21 @@ public class StudyPlannerFrame extends JFrame {
     private DefaultTableModel model;
     private MongoCollection<Document> studyCollection;
 
+    // ---------- KONSTRUKTOR BEZ ARGUMENATA ----------
     public StudyPlannerFrame() {
+        this("default"); // default tema
+    }
+
+    // ---------- KONSTRUKTOR S TEMOM ----------
+    public StudyPlannerFrame(String theme) {
         setTitle("Study Planner");
         setSize(500, 400);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLayout(null);
         setLocationRelativeTo(null);
+
+        // Primjena teme
+        getContentPane().setBackground(Theme.getColor(theme));
 
         studyCollection = MongoDBConnection.getDatabase().getCollection("study");
 
