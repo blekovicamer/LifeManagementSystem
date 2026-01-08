@@ -6,7 +6,6 @@ import financeapp.MongoDBConnection;
 import org.bson.Document;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class RegisterFrame extends JFrame {
 
@@ -23,9 +22,7 @@ public class RegisterFrame extends JFrame {
 
         usernameField = new JTextField();
         passwordField = new JPasswordField();
-        themeBox = new JComboBox<>(new String[]{
-                "green", "blue", "pink", "orange", "dark", "cyberpunk"
-        });
+        themeBox = new JComboBox<>(new String[]{"green", "blue", "pink", "orange", "dark", "cyberpunk"});
         registerButton = new JButton("Register");
 
         usernameField.setBounds(80, 20, 150, 25);
@@ -46,8 +43,7 @@ public class RegisterFrame extends JFrame {
     }
 
     private void registerUser() {
-        MongoCollection<Document> users =
-                MongoDBConnection.getDatabase().getCollection("users");
+        MongoCollection<Document> users = MongoDBConnection.getDatabase().getCollection("users");
 
         String username = usernameField.getText().trim();
         String password = new String(passwordField.getPassword());
@@ -58,23 +54,20 @@ public class RegisterFrame extends JFrame {
             return;
         }
 
-        // Provjera da li username već postoji
         if(users.find(Filters.eq("username", username)).first() != null) {
             JOptionPane.showMessageDialog(this, "Username already exists!");
             return;
         }
 
-        // Spremanje korisnika u MongoDB
-        Document user = new Document("username", username)
+        Document userDoc = new Document("username", username)
                 .append("password", password)
                 .append("theme", theme);
+        users.insertOne(userDoc);
 
-        users.insertOne(user);
+        // Create User object
+        User userObj = new User(username, password, theme);
 
-        JOptionPane.showMessageDialog(this, "Registration successful!");
-
-        // Otvaranje Main Menu odma sa odabranom temom
         dispose();
-        new mainmenu.MainMenuFrame(username, theme).setVisible(true);
+        new mainmenu.MainMenuFrame(userObj).setVisible(true);
     }
 }
