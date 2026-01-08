@@ -19,7 +19,7 @@ public class StudyPlannerFrame extends JFrame {
 
     // ---------- KONSTRUKTOR BEZ ARGUMENATA ----------
     public StudyPlannerFrame() {
-        this("default"); // default tema
+        this("default");
     }
 
     // ---------- KONSTRUKTOR S TEMOM ----------
@@ -119,5 +119,8 @@ public class StudyPlannerFrame extends JFrame {
             String date = doc.getString("date");
             model.addRow(new Object[]{subject, task, completed ? "Yes" : "No", date});
         }
+    }
+    public DefaultTableModel getModel() {
+        return model;
     }
 }

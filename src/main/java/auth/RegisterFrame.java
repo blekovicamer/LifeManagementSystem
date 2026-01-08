@@ -73,7 +73,7 @@ public class RegisterFrame extends JFrame {
 
         JOptionPane.showMessageDialog(this, "Registration successful!");
 
-        // Otvaranje Main Menu odmah sa odabranom temom
+        // Otvaranje Main Menu odma sa odabranom temom
         dispose();
         new mainmenu.MainMenuFrame(username, theme).setVisible(true);
     }

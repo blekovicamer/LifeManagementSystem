@@ -19,7 +19,7 @@ public class MoodTrackerFrame extends JFrame {
 
     // ---------- KONSTRUKTOR BEZ ARGUMENATA ----------
     public MoodTrackerFrame() {
-        this("default"); // default tema
+        this("default");
     }
 
     // ---------- KONSTRUKTOR S TEMOM ----------
@@ -100,5 +100,8 @@ public class MoodTrackerFrame extends JFrame {
             String date = doc.getString("date");
             model.addRow(new Object[]{mood, note, date});
         }
+    }
+    public DefaultTableModel getModel() {
+        return model;
     }
 }

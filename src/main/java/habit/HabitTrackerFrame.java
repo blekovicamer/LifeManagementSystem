@@ -107,4 +107,8 @@ public class HabitTrackerFrame extends JFrame {
             model.addRow(new Object[]{name, completed ? "Yes" : "No"});
         }
     }
+
+    public DefaultTableModel getModel() {
+        return model;
+    }
 }

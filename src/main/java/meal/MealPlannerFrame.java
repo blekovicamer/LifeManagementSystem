@@ -19,7 +19,7 @@ public class MealPlannerFrame extends JFrame {
 
     // ---------- KONSTRUKTOR BEZ ARGUMENATA ----------
     public MealPlannerFrame() {
-        this("default"); // default tema
+        this("default");
     }
 
     // ---------- KONSTRUKTOR S TEMOM ----------
@@ -110,5 +110,9 @@ public class MealPlannerFrame extends JFrame {
             String date = doc.getString("date");
             model.addRow(new Object[]{name, calories, date});
         }
+    }
+
+    public DefaultTableModel getModel() {
+        return model;
     }
 }
