@@ -5,6 +5,8 @@ import javax.swing.*;
 import habit.HabitTrackerFrame;
 import meal.MealPlannerFrame;
 import mood.MoodTrackerFrame; // import Mood Tracker
+import study.StudyPlannerFrame;
+
 
 public class MainMenuFrame extends JFrame {
 
@@ -22,28 +24,33 @@ public class MainMenuFrame extends JFrame {
 
         JButton habitBtn = new JButton("Habit Tracker");
         JButton mealBtn = new JButton("Meal Planner");
-        JButton moodBtn = new JButton("Mood Tracker"); // novo dugme
+        JButton moodBtn = new JButton("Mood Tracker");
+        JButton studyBtn = new JButton("Study Planner");
         JButton financeBtn = new JButton("Finance Tracker");
         JButton logoutBtn = new JButton("Logout");
 
         // Podesi pozicije dugmadi
         habitBtn.setBounds(60, 40, 180, 40);
         mealBtn.setBounds(60, 100, 180, 40);
-        moodBtn.setBounds(60, 160, 180, 40); // novo dugme između Meal i Finance
+        moodBtn.setBounds(60, 160, 180, 40);
+        studyBtn.setBounds(60, 280, 180, 40);
         financeBtn.setBounds(60, 220, 180, 40);
-        logoutBtn.setBounds(60, 280, 180, 40);
+        logoutBtn.setBounds(60, 340, 180, 40);
 
         add(habitBtn);
         add(mealBtn);
         add(moodBtn);  // dodano dugme u GUI
         add(financeBtn);
+        add(studyBtn);
         add(logoutBtn);
 
         // ---------- ACTIONS ----------
 
         habitBtn.addActionListener(e -> new HabitTrackerFrame().setVisible(true));
         mealBtn.addActionListener(e -> new MealPlannerFrame().setVisible(true));
-        moodBtn.addActionListener(e -> new MoodTrackerFrame().setVisible(true)); // otvara Mood Tracker
+        moodBtn.addActionListener(e -> new MoodTrackerFrame().setVisible(true));
+        studyBtn.addActionListener(e -> new StudyPlannerFrame().setVisible(true));
+
 
         financeBtn.addActionListener(e -> {
             JFrame frame = new JFrame("Finance Tracker");
